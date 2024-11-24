@@ -1,0 +1,22 @@
+<div class="button-container">
+  <button nz-button nzType="primary" (click)="openOrderEditor()">Adicionar Pedido</button>
+</div>
+
+<nz-table #basicTable [nzData]="orders" [nzBordered]="true" [nzShowPagination]="false">
+  <thead>
+    <tr>
+      <th nzWidth="15%" class="table-header">Código</th>
+      <th nzWidth="35%" class="table-header">Nome</th>
+      <th nzWidth="30%" class="table-header">Descrição</th>
+      <th nzWidth="20%" class="table-header">Data do Pedido</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let order of orders">
+      <td>{{ order.code }}</td>
+      <td>{{ order.name }}</td>
+      <td>{{ order.description }}</td>
+      <td>{{ order.orderDate | date: 'dd/MM/yyyy' }}</td>
+    </tr>
+  </tbody>
+</nz-table>

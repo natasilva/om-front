@@ -1,0 +1,16 @@
+<nz-form-item>
+    <nz-form-label [nzSpan]="6">Order Name</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input nz-input [(ngModel)]="order.name" placeholder="Enter order name" />
+    </nz-form-control>
+  </nz-form-item>
+  
+  <nz-form-item>
+    <nz-form-label [nzSpan]="6">Total</nz-form-label>
+    <nz-form-control [nzSpan]="14">
+      <input type="number" nz-input [(ngModel)]="order.total" placeholder="Enter total" />
+    </nz-form-control>
+  </nz-form-item>
+  
+  <button nz-button nzType="primary" (click)="saveOrder()">Save Order</button>
+  
