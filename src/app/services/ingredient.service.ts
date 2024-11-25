@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService {
+export class IngredientService {
   private url = environment.api
   constructor(private http: HttpClient) { }
 
-  list(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/orders`);
+  list(params: any = {}): Observable<any[]> {
+    return this.http.get<any[]>(`${this.url}/ingredients`, { params });
   }
 
   create(data: any): Observable<any> {
-    return this.http.post<any[]>(`${this.url}/orders`, data);
+    return this.http.post<any[]>(`${this.url}/ingredients`, data);
   }
 }

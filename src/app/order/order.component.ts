@@ -5,6 +5,7 @@ import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { OrderEditorComponent } from './components/order-editor/order-editor.component';
 import { CommonModule } from '@angular/common';
 import { OrderService } from '../services/order.service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-order',
@@ -25,9 +26,10 @@ export class OrderComponent {
 
   openOrderEditor(): void {
     this.modal.create({
-      nzTitle: 'Create Order',
+      nzTitle: 'Registrar Pedido',
       nzContent: OrderEditorComponent,
-    });
+      nzFooter: null,
+    }).afterClose.subscribe(() => this.listOrders());
   }
 
   listOrders() {

@@ -1,16 +1,222 @@
-<nz-form-item>
-    <nz-form-label [nzSpan]="6">Order Name</nz-form-label>
-    <nz-form-control [nzSpan]="14">
-      <input nz-input [(ngModel)]="order.name" placeholder="Enter order name" />
-    </nz-form-control>
-  </nz-form-item>
-  
-  <nz-form-item>
-    <nz-form-label [nzSpan]="6">Total</nz-form-label>
-    <nz-form-control [nzSpan]="14">
-      <input type="number" nz-input [(ngModel)]="order.total" placeholder="Enter total" />
-    </nz-form-control>
-  </nz-form-item>
-  
-  <button nz-button nzType="primary" (click)="saveOrder()">Save Order</button>
-  
+<form [formGroup]="orderForm" nz-form class="form-with-spacing">
+  <!-- Code -->
+  <div nz-form-item>
+    <div nz-form-label>
+      <label for="code">Código</label>
+    </div>
+    <div nz-form-control>
+      <input
+        nz-input
+        id="code"
+        formControlName="code"
+        [class.is-invalid]="orderForm.get('code')?.invalid && orderForm.get('code')?.touched"
+      />
+      <div *ngIf="orderForm.get('code')?.invalid && orderForm.get('code')?.touched" class="error-message">
+        Campo obrigatório.
+      </div>
+    </div>
+  </div>
+
+  <!-- Name -->
+  <div nz-form-item>
+    <div nz-form-label>
+      <label for="name">Nome</label>
+    </div>
+    <div nz-form-control>
+      <input
+        nz-input
+        id="name"
+        formControlName="name"
+        [class.is-invalid]="orderForm.get('name')?.invalid && orderForm.get('name')?.touched"
+      />
+      <div *ngIf="orderForm.get('name')?.invalid && orderForm.get('name')?.touched" class="error-message">
+        Campo obrigatório.
+      </div>
+    </div>
+  </div>
+
+  <!-- Description -->
+  <div nz-form-item>
+    <div nz-form-label>
+      <label for="description">Descrição</label>
+    </div>
+    <div nz-form-control>
+      <input
+        nz-input
+        id="description"
+        formControlName="description"
+        [class.is-invalid]="orderForm.get('description')?.invalid && orderForm.get('description')?.touched"
+      />
+      <div *ngIf="orderForm.get('description')?.invalid && orderForm.get('description')?.touched" class="error-message">
+        Campo obrigatório.
+      </div>
+    </div>
+  </div>
+
+  <!-- Phone -->
+  <div nz-form-item>
+    <div nz-form-label>
+      <label for="phone">Telefone</label>
+    </div>
+    <div nz-form-control>
+      <input
+        nz-input
+        id="phone"
+        formControlName="phone"
+        type="tel"
+        [class.is-invalid]="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched"
+      />
+      <div *ngIf="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched" class="error-message">
+        Campo inválido.
+      </div>
+    </div>
+  </div>
+
+  <!-- Order Date -->
+  <div nz-form-item>
+    <div nz-form-label>
+      <label for="orderDate">Data do Pedido</label>
+    </div>
+    <div nz-form-control>
+      <nz-date-picker
+        formControlName="orderDate"
+        nzFormat="dd/MM/yyyy"
+        [class.is-invalid]="orderForm.get('orderDate')?.invalid && orderForm.get('orderDate')?.touched"
+      ></nz-date-picker>
+      <div *ngIf="orderForm.get('orderDate')?.invalid && orderForm.get('orderDate')?.touched" class="error-message">
+        Campo obrigatório.
+      </div>
+    </div>
+  </div>
+
+  <!-- Address -->
+  <div nz-form-item [formGroupName]="'address'" class="address-wrapper">
+    <div nz-form-label>
+      <label for="address">Endereço</label>
+    </div>
+    <div nz-form-control>
+      <div class="address-fields">
+        <input
+          nz-input
+          formControlName="street"
+          placeholder="Rua"
+          class="address-field"
+          [class.is-invalid]="orderForm.get('address.street')?.invalid && orderForm.get('address.street')?.touched"
+        />
+        <input
+          nz-input
+          formControlName="number"
+          placeholder="Número"
+          class="address-field small"
+          [class.is-invalid]="orderForm.get('address.number')?.invalid && orderForm.get('address.number')?.touched"
+        />
+        <input
+          nz-input
+          formControlName="district"
+          placeholder="Bairro"
+          class="address-field"
+          [class.is-invalid]="orderForm.get('address.district')?.invalid && orderForm.get('address.district')?.touched"
+        />
+      </div>
+      <div *ngIf="orderForm.get('address.street')?.invalid && orderForm.get('address.street')?.touched" class="error-message">
+        Campo obrigatório.
+      </div>
+      <div *ngIf="orderForm.get('address.number')?.invalid && orderForm.get('address.number')?.touched" class="error-message">
+        Campo obrigatório.
+      </div>
+      <div *ngIf="orderForm.get('address.district')?.invalid && orderForm.get('address.district')?.touched" class="error-message">
+        Campo obrigatório.
+      </div>
+    </div>
+  </div>
+
+  <!-- Notes -->
+  <div nz-form-item>
+    <div nz-form-label>
+      <label for="notes">Observações</label>
+    </div>
+    <div nz-form-control>
+      <div formArrayName="notes">
+        <div *ngFor="let note of notes.controls; let i = index" class="note-item">
+          <div class="note-input-wrapper">
+            <input nz-input [formControlName]="i" placeholder="Escreva uma nota" />
+            <button nz-button nzDanger nzType="text" (click)="removeNote(i)">
+              <i nz-icon nzType="delete"></i>
+            </button>
+          </div>
+        </div>
+        <button nz-button nzDashed (click)="addNote()" class="mt-2">
+          Adicionar Nota
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Burgers -->
+  <div nz-form-item>
+    <div nz-form-label>
+      <label for="orderBurgers">Burgers</label>
+    </div>
+    <div nz-form-control>
+      <div formArrayName="orderBurgers">
+        <div *ngFor="let burger of orderBurgers.controls; let i = index" [formGroupName]="i" class="array-item">
+          <nz-select formControlName="burgerId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o burger">
+            <nz-option *ngFor="let option of burgers" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
+          <button nz-button nzDanger nzType="text" (click)="removeBurger(i)">
+            <i nz-icon nzType="delete"></i>
+          </button>
+        </div>
+        <button nz-button nzDashed (click)="addBurger()">Adicionar hambúrguer</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Additionals -->
+  <div nz-form-item>
+    <div nz-form-label>
+      <label for="orderAdditionals">Adicionais</label>
+    </div>
+    <div nz-form-control>
+      <div formArrayName="orderAdditionals">
+        <div *ngFor="let additional of orderAdditionals.controls; let i = index" [formGroupName]="i" class="array-item">
+          <nz-select formControlName="ingredientId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o adicional">
+            <nz-option *ngFor="let option of additionals" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
+          <button nz-button nzDanger nzType="text" (click)="removeAdditional(i)">
+            <i nz-icon nzType="delete"></i>
+          </button>
+        </div>
+        <button nz-button nzDashed (click)="addAdditional()">Adicionar Adicional</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Drinks -->
+  <div nz-form-item>
+    <div nz-form-label>
+      <label for="orderDrinks">Bebidas</label>
+    </div>
+    <div nz-form-control>
+      <div formArrayName="orderDrinks">
+        <div *ngFor="let drink of orderDrinks.controls; let i = index" [formGroupName]="i" class="array-item">
+          <nz-select formControlName="drinkId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione a bebida">
+            <nz-option *ngFor="let option of drinks" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
+          </nz-select>
+          <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
+          <button nz-button nzDanger nzType="text" (click)="removeDrink(i)">
+            <i nz-icon nzType="delete"></i>
+          </button>
+        </div>
+        <button nz-button nzDashed (click)="addDrink()">Adicionar Bebida</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<div nz-footer class="modal-footer">
+  <button nz-button nzType="default" (click)="closeModal()">Cancelar</button>
+  <button nz-button nzType="primary" (click)="saveOrder()">Salvar</button>
+</div>
