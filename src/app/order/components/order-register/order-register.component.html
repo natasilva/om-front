@@ -253,7 +253,19 @@
   </div>
 </form>
 
-<div nz-footer class="modal-footer">
-  <button nz-button nzType="default" (click)="closeModal()">Cancelar</button>
-  <button nz-button nzType="primary" (click)="saveOrder()">Salvar</button>
+<div class="footer">
+  <div nz-form-item>
+    <div nz-form-label>
+      <label>Total do Pedido</label>
+    </div>
+    <div nz-form-control>
+      <div class="total-price">
+        {{ getTotalPrice() | currency: 'BRL' }}
+      </div>
+    </div>
+  </div>
+  <div nz-footer class="modal-footer">
+    <button nz-button nzType="default" (click)="closeModal()">Cancelar</button>
+    <button nz-button nzType="primary" (click)="saveOrder()">Salvar</button>
+  </div>
 </div>

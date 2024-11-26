@@ -79,6 +79,28 @@ export class OrderRegisterComponent implements OnInit {
     });
   }
 
+  getTotalPrice(): number {
+    const burgersTotal = this.orderForm.get('orderBurgers')?.value.reduce(
+      (sum: number, item: any) => sum + this.getItemPrice('burger', item.burgerId) * item.quantity,
+      0
+    );
+    const additionalsTotal = this.orderForm.get('orderAdditionals')?.value.reduce(
+      (sum: number, item: any) => sum + this.getItemPrice('additional', item.ingredientId) * item.quantity,
+      0
+    );
+    const drinksTotal = this.orderForm.get('orderDrinks')?.value.reduce(
+      (sum: number, item: any) => sum + this.getItemPrice('drink', item.drinkId) * item.quantity,
+      0
+    );
+    return burgersTotal + additionalsTotal + drinksTotal;
+  }
+
+  private getItemPrice(type: 'burger' | 'additional' | 'drink', id: number): number {
+    const list = type === 'burger' ? this.burgers : type === 'additional' ? this.additionals : this.drinks;
+    const item = list.find(option => option.id === id);
+    return item ? item.unit_price : 0;
+  }
+
   get notes() {
     return this.orderForm.get('notes') as FormArray;
   }
