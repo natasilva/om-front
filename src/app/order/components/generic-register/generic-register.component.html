@@ -5,7 +5,7 @@
         <label for="code">Código</label>
       </div>
       <div nz-form-control>
-        <input nz-input id="code" formControlName="code" />
+        <input nz-input id="code" placeholder="Código do item" formControlName="code" />
         <div *ngIf="registerForm.get('code')?.invalid && registerForm.get('code')?.touched" class="error-message">
           Campo obrigatório.
         </div>
@@ -18,7 +18,7 @@
         <label for="description">Descrição</label>
       </div>
       <div nz-form-control>
-        <input nz-input id="description" formControlName="description" />
+        <input nz-input id="description" placeholder="Descrição do item" formControlName="description" />
         <div *ngIf="registerForm.get('description')?.invalid && registerForm.get('description')?.touched" class="error-message">
           Campo obrigatório.
         </div>
@@ -31,7 +31,7 @@
         <label for="unit_price">Valor</label>
       </div>
       <div nz-form-control>
-        <input nz-input id="unit_price" formControlName="unit_price" type="number" />
+        <input nz-input id="unit_price" placeholder="Valor do item" formControlName="unit_price" type="number" />
         <div *ngIf="registerForm.get('unit_price')?.invalid && registerForm.get('unit_price')?.touched" class="error-message">
           Campo obrigatório.
         </div>
@@ -71,7 +71,7 @@
                 nzPlaceHolder="Selecione o ingrediente">
                 <nz-option 
                   *ngFor="let option of ingredients" 
-                  [nzLabel]="option.description" 
+                  [nzLabel]="option.description + ' - ' + (option.unit_price | currency:'BRL')" 
                   [nzValue]="option.id">
                 </nz-option>
               </nz-select>

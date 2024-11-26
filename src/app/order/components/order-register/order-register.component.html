@@ -8,6 +8,7 @@
       <input
         nz-input
         id="code"
+        placeholder="Código do pedido"
         formControlName="code"
         [class.is-invalid]="orderForm.get('code')?.invalid && orderForm.get('code')?.touched"
       />
@@ -26,6 +27,7 @@
       <input
         nz-input
         id="name"
+        placeholder="Nome do cliente"
         formControlName="name"
         [class.is-invalid]="orderForm.get('name')?.invalid && orderForm.get('name')?.touched"
       />
@@ -44,6 +46,7 @@
       <input
         nz-input
         id="description"
+        placeholder="Descrição do pedido"
         formControlName="description"
         [class.is-invalid]="orderForm.get('description')?.invalid && orderForm.get('description')?.touched"
       />
@@ -62,6 +65,7 @@
       <input
         nz-input
         id="phone"
+        placeholder="Telefone do cliente"
         formControlName="phone"
         type="tel"
         [class.is-invalid]="orderForm.get('phone')?.invalid && orderForm.get('phone')?.touched"
@@ -155,14 +159,14 @@
   <!-- Burgers -->
   <div nz-form-item>
     <div nz-form-label>
-      <label for="orderBurgers">Burgers</label>
+      <label for="orderBurgers">Hambúrgueres</label>
     </div>
     <div nz-form-control>
       <div formArrayName="orderBurgers">
         <div *ngFor="let burger of orderBurgers.controls; let i = index" [formGroupName]="i" class="array-item">
           <div class="form-row">
             <nz-select formControlName="burgerId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o burger">
-              <nz-option *ngFor="let option of burgers" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
+              <nz-option *ngFor="let option of burgers" [nzLabel]="option.description + ' - ' + (option.unit_price | currency:'BRL')" [nzValue]="option.id"></nz-option>
             </nz-select>
             <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
             <button nz-button nzDanger nzType="text" (click)="removeBurger(i)">
@@ -194,7 +198,7 @@
         <div *ngFor="let additional of orderAdditionals.controls; let i = index" [formGroupName]="i" class="array-item">
           <div class="form-row">
             <nz-select formControlName="ingredientId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o adicional">
-              <nz-option *ngFor="let option of additionals" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
+              <nz-option *ngFor="let option of additionals" [nzLabel]="option.description + ' - ' + (option.unit_price | currency:'BRL')" [nzValue]="option.id"></nz-option>
             </nz-select>
             <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
             <button nz-button nzDanger nzType="text" (click)="removeAdditional(i)">
@@ -226,7 +230,7 @@
         <div *ngFor="let drink of orderDrinks.controls; let i = index" [formGroupName]="i" class="array-item">
           <div class="form-row">
             <nz-select formControlName="drinkId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione a bebida">
-              <nz-option *ngFor="let option of drinks" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
+              <nz-option *ngFor="let option of drinks" [nzLabel]="option.description + ' - ' + (option.unit_price | currency:'BRL')" [nzValue]="option.id"></nz-option>
             </nz-select>
             <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
             <button nz-button nzDanger nzType="text" (click)="removeDrink(i)">
