@@ -1,0 +1,116 @@
+<form [formGroup]="registerForm" nz-form class="form-with-spacing">
+    <!-- Código -->
+    <div nz-form-item>
+      <div nz-form-label>
+        <label for="code">Código</label>
+      </div>
+      <div nz-form-control>
+        <input nz-input id="code" formControlName="code" />
+        <div *ngIf="registerForm.get('code')?.invalid && registerForm.get('code')?.touched" class="error-message">
+          Campo obrigatório.
+        </div>
+      </div>
+    </div>
+  
+    <!-- Descrição -->
+    <div nz-form-item>
+      <div nz-form-label>
+        <label for="description">Descrição</label>
+      </div>
+      <div nz-form-control>
+        <input nz-input id="description" formControlName="description" />
+        <div *ngIf="registerForm.get('description')?.invalid && registerForm.get('description')?.touched" class="error-message">
+          Campo obrigatório.
+        </div>
+      </div>
+    </div>
+  
+    <!-- Valor -->
+    <div nz-form-item>
+      <div nz-form-label>
+        <label for="unit_price">Valor</label>
+      </div>
+      <div nz-form-control>
+        <input nz-input id="unit_price" formControlName="unit_price" type="number" />
+        <div *ngIf="registerForm.get('unit_price')?.invalid && registerForm.get('unit_price')?.touched" class="error-message">
+          Campo obrigatório.
+        </div>
+      </div>
+    </div>
+  
+    <div *ngIf="type === 'ingredient'" nz-form-item>
+      <div nz-form-label>
+        <label for="is_additional">É adicional?</label>
+      </div>
+      <div nz-form-control>
+        <label nz-checkbox formControlName="is_additional">Sim</label>
+      </div>
+    </div>
+  
+    <div *ngIf="type === 'drink'" nz-form-item>
+      <div nz-form-label>
+        <label for="has_sugar">Contém açúcar?</label>
+      </div>
+      <div nz-form-control>
+        <label nz-checkbox formControlName="has_sugar">Sim</label>
+      </div>
+    </div>
+
+		<div nz-form-item *ngIf="type === 'burger'">
+			<div nz-form-label>
+					<label for="burgerIngredients">Ingredientes</label>
+			</div>
+			<div nz-form-control>
+					<div formArrayName="burgerIngredients">
+					<div *ngFor="let ingredient of burgerIngredients.controls; let i = index" [formGroupName]="i" class="array-item">
+						<div class="form-row">
+              <nz-select 
+                formControlName="ingredientId" 
+                nzShowSearch 
+                nzAllowClear 
+                nzPlaceHolder="Selecione o ingrediente">
+                <nz-option 
+                  *ngFor="let option of ingredients" 
+                  [nzLabel]="option.description" 
+                  [nzValue]="option.id">
+                </nz-option>
+              </nz-select>
+              <input 
+                nz-input 
+                formControlName="quantity" 
+                placeholder="Qtd." 
+                type="number" 
+                class="quantity-input" />
+              <button 
+                nz-button 
+                nzDanger 
+                nzType="text" 
+                (click)="removeIngredient(i)">
+                <i nz-icon nzType="delete"></i>
+              </button>
+            </div>
+
+            <div class="error-row">
+              <div class="error-message" *ngIf="ingredient.get('ingredientId')?.invalid && ingredient.get('ingredientId')?.touched">
+                Selecione um ingrediente.
+              </div>
+              <div class="error-message" *ngIf="ingredient.get('quantity')?.invalid && ingredient.get('quantity')?.touched">
+                Insira uma quantidade válida.
+              </div>
+            </div>
+					</div>
+					<button nz-button nzDashed (click)="addIngredient()">Adicionar Ingrediente</button>
+					</div>
+			</div>
+		</div>
+  </form>
+  
+<div nz-footer class="modal-footer">
+	<button nz-button nzType="default" (click)="closeModal()" [disabled]="submitting">
+		Cancelar
+	</button>
+	<button nz-button nzType="primary" (click)="submitForm()" [nzLoading]="submitting">
+		Salvar
+	</button>
+</div>
+  

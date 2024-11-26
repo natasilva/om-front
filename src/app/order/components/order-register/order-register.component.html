@@ -160,13 +160,24 @@
     <div nz-form-control>
       <div formArrayName="orderBurgers">
         <div *ngFor="let burger of orderBurgers.controls; let i = index" [formGroupName]="i" class="array-item">
-          <nz-select formControlName="burgerId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o burger">
-            <nz-option *ngFor="let option of burgers" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
-          </nz-select>
-          <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
-          <button nz-button nzDanger nzType="text" (click)="removeBurger(i)">
-            <i nz-icon nzType="delete"></i>
-          </button>
+          <div class="form-row">
+            <nz-select formControlName="burgerId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o burger">
+              <nz-option *ngFor="let option of burgers" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
+            </nz-select>
+            <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
+            <button nz-button nzDanger nzType="text" (click)="removeBurger(i)">
+              <i nz-icon nzType="delete"></i>
+            </button>
+          </div>
+
+          <div class="error-row">
+            <div class="error-message" *ngIf="burger.get('burgerId')?.invalid && burger.get('burgerId')?.touched">
+              Selecione um hambúrguer.
+            </div>
+            <div class="error-message" *ngIf="burger.get('quantity')?.invalid && burger.get('quantity')?.touched">
+              Insira uma quantidade válida.
+            </div>
+          </div>
         </div>
         <button nz-button nzDashed (click)="addBurger()">Adicionar hambúrguer</button>
       </div>
@@ -181,13 +192,24 @@
     <div nz-form-control>
       <div formArrayName="orderAdditionals">
         <div *ngFor="let additional of orderAdditionals.controls; let i = index" [formGroupName]="i" class="array-item">
-          <nz-select formControlName="ingredientId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o adicional">
-            <nz-option *ngFor="let option of additionals" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
-          </nz-select>
-          <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
-          <button nz-button nzDanger nzType="text" (click)="removeAdditional(i)">
-            <i nz-icon nzType="delete"></i>
-          </button>
+          <div class="form-row">
+            <nz-select formControlName="ingredientId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o adicional">
+              <nz-option *ngFor="let option of additionals" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
+            </nz-select>
+            <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
+            <button nz-button nzDanger nzType="text" (click)="removeAdditional(i)">
+              <i nz-icon nzType="delete"></i>
+            </button>
+          </div>
+
+          <div class="error-row">
+            <div class="error-message" *ngIf="additional.get('ingredientId')?.invalid && additional.get('ingredientId')?.touched">
+              Selecione um adicional.
+            </div>
+            <div class="error-message" *ngIf="additional.get('quantity')?.invalid && additional.get('quantity')?.touched">
+              Insira uma quantidade válida.
+            </div>
+          </div>
         </div>
         <button nz-button nzDashed (click)="addAdditional()">Adicionar Adicional</button>
       </div>
@@ -202,13 +224,24 @@
     <div nz-form-control>
       <div formArrayName="orderDrinks">
         <div *ngFor="let drink of orderDrinks.controls; let i = index" [formGroupName]="i" class="array-item">
-          <nz-select formControlName="drinkId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione a bebida">
-            <nz-option *ngFor="let option of drinks" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
-          </nz-select>
-          <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
-          <button nz-button nzDanger nzType="text" (click)="removeDrink(i)">
-            <i nz-icon nzType="delete"></i>
-          </button>
+          <div class="form-row">
+            <nz-select formControlName="drinkId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione a bebida">
+              <nz-option *ngFor="let option of drinks" [nzLabel]="option.description" [nzValue]="option.id"></nz-option>
+            </nz-select>
+            <input nz-input formControlName="quantity" placeholder="Qtd." type="number" class="quantity-input" />
+            <button nz-button nzDanger nzType="text" (click)="removeDrink(i)">
+              <i nz-icon nzType="delete"></i>
+            </button>
+          </div>
+
+          <div class="error-row">
+            <div class="error-message" *ngIf="drink.get('drinkId')?.invalid && drink.get('drinkId')?.touched">
+              Selecione uma bebida.
+            </div>
+            <div class="error-message" *ngIf="drink.get('quantity')?.invalid && drink.get('quantity')?.touched">
+              Insira uma quantidade válida.
+            </div>
+          </div>
         </div>
         <button nz-button nzDashed (click)="addDrink()">Adicionar Bebida</button>
       </div>

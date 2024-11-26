@@ -1,5 +1,8 @@
 <div class="button-container">
-  <button nz-button nzType="primary" (click)="openOrderEditor()">Adicionar Pedido</button>
+  <button nz-button nzType="primary" (click)="openRegisterModal('drink')">Cadastrar Bebida</button>
+  <button nz-button nzType="primary" (click)="openRegisterModal('ingredient')">Cadastrar Ingrediente</button>
+  <button nz-button nzType="primary" (click)="openRegisterModal('burger')">Cadastrar Hambúrguer</button>
+  <button nz-button nzType="primary" (click)="openOrderEditor()">Cadastrar Pedido</button>
 </div>
 
 <nz-table #basicTable [nzData]="orders" [nzBordered]="true" [nzShowPagination]="false">

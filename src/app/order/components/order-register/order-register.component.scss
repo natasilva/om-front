@@ -1,14 +1,3 @@
-form {
-  padding: 20px;
-}
-
-.nz-form-item {
-  margin-bottom: 15px;
-}
-
-button[nz-button] {
-  margin-top: 10px;
-}
 
 .note-input-wrapper input {
   flex-grow: 1;
@@ -19,12 +8,6 @@ button[nz-button] {
   align-items: center;
   justify-content: center;
   padding: 0;
-}
-
-.form-with-spacing {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
 }
 
 .note-input-wrapper {
@@ -54,23 +37,3 @@ button[nz-button] {
   flex: 0 0 100px;
 }
 
-.modal-footer {
-  display: flex;
-  justify-content: flex-end;
-  gap: 10px;
-}
-
-.array-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-}
-
-.quantity-input {
-  width: 80px;
-}
-
-nz-select {
-  flex: 1;
-}

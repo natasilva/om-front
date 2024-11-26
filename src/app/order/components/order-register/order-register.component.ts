@@ -12,18 +12,19 @@ import { NzSelectModule } from 'ng-zorro-antd/select';
 import { DrinkService } from '../../../services/drink.service';
 import { IngredientService } from '../../../services/ingredient.service';
 import { BurgerService } from '../../../services/burger.service';
+import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 
 @Component({
-  selector: 'app-order-editor',
+  selector: 'app-order-register',
   standalone: true,
-  imports: [CommonModule, NzSelectModule, NzIconModule, NzFormModule, NzInputModule, NzButtonModule, FormsModule, NzModalModule, ReactiveFormsModule, NzDatePickerModule],
-  templateUrl: './order-editor.component.html',
-  styleUrls: ['./order-editor.component.scss']
+  imports: [CommonModule, NzSelectModule, NzMessageModule, NzIconModule, NzFormModule, NzInputModule, NzButtonModule, FormsModule, NzModalModule, ReactiveFormsModule, NzDatePickerModule],
+  templateUrl: './order-register.component.html',
+  styleUrls: ['./order-register.component.scss']
 })
-export class OrderEditorComponent implements OnInit {
+export class OrderRegisterComponent implements OnInit {
   orderForm: FormGroup;
 
-  burgers: any[]  = [];
+  burgers: any[] = [];
   additionals: any[]  = [];
   drinks: any[] = [];
 
@@ -32,6 +33,7 @@ export class OrderEditorComponent implements OnInit {
     private modalRef: NzModalRef,
     private orderService: OrderService,
     private drinkService: DrinkService,
+    private message: NzMessageService,
     private ingredientService: IngredientService,
     private burgerService: BurgerService
   ) {
@@ -151,16 +153,16 @@ export class OrderEditorComponent implements OnInit {
       const orderData = this.orderForm.value;
       this.orderService.create(orderData).subscribe({
         next: (response: any) => {
-          console.log('Pedido salvo com sucesso!', response);
+          this.message.success('Pedido salvo com sucesso!!');
           this.closeModal()
         },
         error: (error: any) => {
-          console.error('Erro ao salvar pedido', error);
+          this.message.error('Erro ao salvar pedido!');
         }
       });
     } else {
       this.orderForm.markAllAsTouched();
-      console.log('Formulário inválido');
+      this.message.error('Formulário inválido!');
     }
   }
 }

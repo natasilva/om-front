@@ -1,4 +1,20 @@
-/* You can add global styles to this file, and also import other style files */
+form {
+  padding: 20px;
+}
+
+.nz-form-item {
+  margin-bottom: 15px;
+}
+
+.form-with-spacing {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+button[nz-button] {
+  margin-top: 15px;
+}
 
 .is-invalid {
   border-color: red !important;
@@ -8,4 +24,35 @@
   color: red;
   font-size: 12px;
   margin-top: 4px;
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.array-item {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.error-row {
+  display: flex;
+  flex-direction: column;
+}
+
+nz-select {
+  flex: 1;
+}
+
+.quantity-input {
+  width: 80px;
 }
