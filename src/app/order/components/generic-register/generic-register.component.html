@@ -28,16 +28,17 @@
     <!-- Valor -->
     <div nz-form-item>
       <div nz-form-label>
-        <label for="unit_price">Valor</label>
+        <label for="unit_price">Valor (R$)</label>
       </div>
       <div nz-form-control>
-        <input nz-input id="unit_price" placeholder="Valor do item" formControlName="unit_price" type="number" />
+        <input nz-input id="unit_price" placeholder="Valor do item (R$)" formControlName="unit_price" type="number" />
         <div *ngIf="registerForm.get('unit_price')?.invalid && registerForm.get('unit_price')?.touched" class="error-message">
           Campo obrigatório.
         </div>
       </div>
     </div>
   
+    <!-- É adicional? -->
     <div *ngIf="type === 'ingredient'" nz-form-item>
       <div nz-form-label>
         <label for="is_additional">É adicional?</label>
@@ -56,50 +57,54 @@
       </div>
     </div>
 
+    <!-- Ingredientes -->
 		<div nz-form-item *ngIf="type === 'burger'">
 			<div nz-form-label>
 					<label for="burgerIngredients">Ingredientes</label>
 			</div>
 			<div nz-form-control>
 					<div formArrayName="burgerIngredients">
-					<div *ngFor="let ingredient of burgerIngredients.controls; let i = index" [formGroupName]="i" class="array-item">
-						<div class="form-row">
-              <nz-select 
-                formControlName="ingredientId" 
-                nzShowSearch 
-                nzAllowClear 
-                nzPlaceHolder="Selecione o ingrediente">
-                <nz-option 
-                  *ngFor="let option of ingredients" 
-                  [nzLabel]="option.description + ' - ' + (option.unit_price | currency:'BRL')" 
-                  [nzValue]="option.id">
-                </nz-option>
-              </nz-select>
-              <input 
-                nz-input 
-                formControlName="quantity" 
-                placeholder="Qtd." 
-                type="number" 
-                class="quantity-input" />
-              <button 
-                nz-button 
-                nzDanger 
-                nzType="text" 
-                (click)="removeIngredient(i)">
-                <i nz-icon nzType="delete"></i>
-              </button>
-            </div>
+            <div *ngFor="let ingredient of burgerIngredients.controls; let i = index" [formGroupName]="i" class="array-item">
+              <div class="form-row">
+                <nz-select 
+                  formControlName="ingredientId" 
+                  nzShowSearch 
+                  nzAllowClear 
+                  nzPlaceHolder="Selecione o ingrediente">
+                  <nz-option 
+                    *ngFor="let option of ingredients" 
+                    [nzLabel]="option.description + ' - ' + (option.unit_price | currency:'BRL')" 
+                    [nzValue]="option.id">
+                  </nz-option>
+                </nz-select>
+                <input 
+                  nz-input 
+                  formControlName="quantity" 
+                  placeholder="Qtd." 
+                  type="number" 
+                  class="quantity-input" />
+                <button 
+                  nz-button 
+                  nzDanger 
+                  nzType="text" 
+                  (click)="removeIngredient(i)">
+                  <i nz-icon nzType="delete"></i>
+                </button>
+              </div>
 
-            <div class="error-row">
-              <div class="error-message" *ngIf="ingredient.get('ingredientId')?.invalid && ingredient.get('ingredientId')?.touched">
-                Selecione um ingrediente.
-              </div>
-              <div class="error-message" *ngIf="ingredient.get('quantity')?.invalid && ingredient.get('quantity')?.touched">
-                Insira uma quantidade válida.
+              <div class="error-row">
+                <div class="error-message" *ngIf="ingredient.get('ingredientId')?.invalid && ingredient.get('ingredientId')?.touched">
+                  Selecione um ingrediente.
+                </div>
+                <div class="error-message" *ngIf="ingredient.get('quantity')?.invalid && ingredient.get('quantity')?.touched">
+                  Insira uma quantidade válida.
+                </div>
               </div>
             </div>
-					</div>
-					<button nz-button nzDashed (click)="addIngredient()">Adicionar Ingrediente</button>
+            <button nz-button nzDashed (click)="addIngredient()">Adicionar Ingrediente</button>
+            <div *ngIf="registerForm.get('burgerIngredients')?.hasError('minimumArrayLength') && registerForm.get('burgerIngredients')?.touched">
+              <p class="error-message">Você deve adicionar pelo menos um ingrediente!</p>
+            </div>
 					</div>
 			</div>
 		</div>

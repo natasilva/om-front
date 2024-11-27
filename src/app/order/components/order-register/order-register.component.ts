@@ -4,7 +4,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
 import { OrderService } from '../../../services/order.service';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -14,6 +14,7 @@ import { IngredientService } from '../../../services/ingredient.service';
 import { BurgerService } from '../../../services/burger.service';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
 import { NzCardModule } from 'ng-zorro-antd/card';
+import { GenericRegisterComponent } from '../generic-register/generic-register.component';
 
 @Component({
   selector: 'app-order-register',
@@ -34,6 +35,7 @@ export class OrderRegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private modalRef: NzModalRef,
+    private modal: NzModalService,
     private orderService: OrderService,
     private drinkService: DrinkService,
     private message: NzMessageService,
@@ -52,7 +54,7 @@ export class OrderRegisterComponent implements OnInit {
         district: ['', [Validators.required]],
       }),
       notes: this.fb.array([]),
-      orderBurgers: this.fb.array([]),
+      orderBurgers: this.fb.array([], [Validators.required, this.minimumArrayLength(1)]),
       orderAdditionals: this.fb.array([]),
       orderDrinks: this.fb.array([]),
     });
@@ -80,6 +82,35 @@ export class OrderRegisterComponent implements OnInit {
     this.drinkService.list().subscribe((drinks) => {
       this.drinks = drinks;
     });
+  }
+
+  openRegisterModal(modalType: string): void {
+    const title: { [key: string]: string} = {
+      drink: 'Bebida',
+      ingredient: 'Ingrediente',
+      burger: 'Hambúrguer',
+    }
+
+    const lists: { [key: string]: () => void} = {
+      drink: () => this.listDrinks(),
+      ingredient: () => this.listAdditionals(),
+      burger: () => this.listBurgers(),
+    }
+
+    this.modal.create({
+      nzTitle: 'Cadastrar ' + title[modalType],
+      nzContent: GenericRegisterComponent,
+      nzFooter: null,
+      nzData: {
+        type: modalType
+      }
+    }).afterClose.subscribe(() => lists[modalType]());
+  }
+
+  minimumArrayLength(minLength: number) {
+    return (formArray: FormArray): { [key: string]: any } | null => {
+      return formArray.length >= minLength ? null : { minimumArrayLength: true };
+    };
   }
 
   // Calcula o preço total do pedido

@@ -1,3 +1,9 @@
+$primary-color: #648eb3;
+$border-color: #b5b5b5;
+$text-color: #333;
+$placeholder-color: #b5b5b5;
+$button-hover: darken($primary-color, 15%);
+
 form {
   padding: 20px;
 }
@@ -62,12 +68,6 @@ nz-select {
   width: 80px;
 }
 
-$primary-color: #648eb3;
-$border-color: #b5b5b5;
-$text-color: #333;
-$placeholder-color: #b5b5b5;
-$button-hover: darken($primary-color, 15%);
-
 button[nzType="primary"] {
   background-color: $primary-color !important;
   border-color: $primary-color !important;
@@ -115,5 +115,9 @@ input[nz-input],
 
 label {
   font-weight: 500;
+  color: $text-color;
+}
+
+.page-title {
   color: $text-color;
 }

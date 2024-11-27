@@ -160,6 +160,9 @@
   <div nz-form-item>
     <div nz-form-label>
       <label for="orderBurgers">Hambúrgueres</label>
+      <button nz-button nzType="text" (click)="openRegisterModal('burger')">
+        <i nz-icon nzType="plus-circle"></i>
+      </button>
     </div>
     <div nz-form-control>
       <div class="array-form" formArrayName="orderBurgers">
@@ -184,6 +187,9 @@
           </div>
         </div>
         <button nz-button nzDashed (click)="addBurger()">Adicionar hambúrguer</button>
+        <div *ngIf="orderForm.get('orderBurgers')?.hasError('minimumArrayLength') && orderForm.get('orderBurgers')?.touched">
+          <p class="error-message">Você deve adicionar pelo menos um lanche!</p>
+        </div>
       </div>
     </div>
   </div>
@@ -192,6 +198,9 @@
   <div nz-form-item>
     <div nz-form-label>
       <label for="orderAdditionals">Adicionais</label>
+      <button nz-button nzType="text" (click)="openRegisterModal('ingredient')">
+        <i nz-icon nzType="plus-circle"></i>
+      </button>
     </div>
     <div nz-form-control>
       <div class="array-form" formArrayName="orderAdditionals">
@@ -224,6 +233,9 @@
   <div nz-form-item>
     <div nz-form-label>
       <label for="orderDrinks">Bebidas</label>
+      <button nz-button nzType="text" (click)="openRegisterModal('drink')">
+        <i nz-icon nzType="plus-circle"></i>
+      </button>
     </div>
     <div nz-form-control>
       <div class="array-form" formArrayName="orderDrinks">

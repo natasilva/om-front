@@ -40,12 +40,12 @@ export class GenericRegisterComponent {
     this.type = this.nzModalData.type
 
     this.registerForm = this.fb.group({
-      code: [null, [Validators.required, Validators.maxLength(10)]],
+      code: [null, [Validators.required, Validators.maxLength(5)]],
       description: [null, [Validators.required, Validators.maxLength(100)]],
       unit_price: [null, [Validators.required, Validators.min(0)]],
       ...(this.type === 'ingredient' && { is_additional: [false] }),
       ...(this.type === 'drink' && { has_sugar: [false] }),
-      ...(this.type === 'burger' && { burgerIngredients: this.fb.array([])}),
+      ...(this.type === 'burger' && { burgerIngredients: this.fb.array([], [Validators.required, this.minimumArrayLength(1)])}),
     });
 
     this.listIngredients();
@@ -55,6 +55,12 @@ export class GenericRegisterComponent {
     this.ingredientService.list().subscribe((ingredients) => {
       this.ingredients = ingredients;
     });
+  }
+
+  minimumArrayLength(minLength: number) {
+    return (formArray: FormArray): { [key: string]: any } | null => {
+      return formArray.length >= minLength ? null : { minimumArrayLength: true };
+    };
   }
 
   get burgerIngredients(): FormArray {
