@@ -4,7 +4,7 @@ import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { NzModalModule, NzModalRef, NzModalService } from 'ng-zorro-antd/modal';
+import { NzModalModule, NzModalRef } from 'ng-zorro-antd/modal';
 import { OrderService } from '../../../services/order.service';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 import { NzIconModule } from 'ng-zorro-antd/icon';
@@ -13,11 +13,12 @@ import { DrinkService } from '../../../services/drink.service';
 import { IngredientService } from '../../../services/ingredient.service';
 import { BurgerService } from '../../../services/burger.service';
 import { NzMessageModule, NzMessageService } from 'ng-zorro-antd/message';
+import { NzCardModule } from 'ng-zorro-antd/card';
 
 @Component({
   selector: 'app-order-register',
   standalone: true,
-  imports: [CommonModule, NzSelectModule, NzMessageModule, NzIconModule, NzFormModule, NzInputModule, NzButtonModule, FormsModule, NzModalModule, ReactiveFormsModule, NzDatePickerModule],
+  imports: [CommonModule, NzCardModule, NzSelectModule, NzMessageModule, NzIconModule, NzFormModule, NzInputModule, NzButtonModule, FormsModule, NzModalModule, ReactiveFormsModule, NzDatePickerModule],
   templateUrl: './order-register.component.html',
   styleUrls: ['./order-register.component.scss']
 })
@@ -27,6 +28,8 @@ export class OrderRegisterComponent implements OnInit {
   burgers: any[] = [];
   additionals: any[]  = [];
   drinks: any[] = [];
+
+  submitting = false;
 
   constructor(
     private fb: FormBuilder,
@@ -172,13 +175,16 @@ export class OrderRegisterComponent implements OnInit {
   saveOrder(): void {
     if (this.orderForm.valid) {
       debugger
+      this.submitting = true;
       const orderData = this.orderForm.value;
       this.orderService.create(orderData).subscribe({
         next: (response: any) => {
           this.message.success('Pedido salvo com sucesso!!');
+          this.submitting = false;
           this.closeModal()
         },
         error: (error: any) => {
+          this.submitting = false;
           this.message.error('Erro ao salvar pedido!');
         }
       });

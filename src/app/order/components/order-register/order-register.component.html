@@ -140,9 +140,9 @@
       <label for="notes">Observações</label>
     </div>
     <div nz-form-control>
-      <div formArrayName="notes">
-        <div *ngFor="let note of notes.controls; let i = index" class="note-item">
-          <div class="note-input-wrapper">
+      <div class="array-form" formArrayName="notes">
+        <div *ngFor="let note of notes.controls; let i = index" class="array-item">
+          <div class="form-row">
             <input nz-input [formControlName]="i" placeholder="Escreva uma nota" />
             <button nz-button nzDanger nzType="text" (click)="removeNote(i)">
               <i nz-icon nzType="delete"></i>
@@ -162,7 +162,7 @@
       <label for="orderBurgers">Hambúrgueres</label>
     </div>
     <div nz-form-control>
-      <div formArrayName="orderBurgers">
+      <div class="array-form" formArrayName="orderBurgers">
         <div *ngFor="let burger of orderBurgers.controls; let i = index" [formGroupName]="i" class="array-item">
           <div class="form-row">
             <nz-select formControlName="burgerId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o burger">
@@ -194,7 +194,7 @@
       <label for="orderAdditionals">Adicionais</label>
     </div>
     <div nz-form-control>
-      <div formArrayName="orderAdditionals">
+      <div class="array-form" formArrayName="orderAdditionals">
         <div *ngFor="let additional of orderAdditionals.controls; let i = index" [formGroupName]="i" class="array-item">
           <div class="form-row">
             <nz-select formControlName="ingredientId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione o adicional">
@@ -226,7 +226,7 @@
       <label for="orderDrinks">Bebidas</label>
     </div>
     <div nz-form-control>
-      <div formArrayName="orderDrinks">
+      <div class="array-form" formArrayName="orderDrinks">
         <div *ngFor="let drink of orderDrinks.controls; let i = index" [formGroupName]="i" class="array-item">
           <div class="form-row">
             <nz-select formControlName="drinkId" nzShowSearch nzAllowClear nzPlaceHolder="Selecione a bebida">
@@ -265,7 +265,7 @@
     </div>
   </div>
   <div nz-footer class="modal-footer">
-    <button nz-button nzType="default" (click)="closeModal()">Cancelar</button>
-    <button nz-button nzType="primary" (click)="saveOrder()">Salvar</button>
+    <button nz-button nzType="default" (click)="closeModal()" [disabled]="submitting">Cancelar</button>
+    <button class="btn-save" nz-button nzType="primary" (click)="saveOrder()" [nzLoading]="submitting">Salvar</button>
   </div>
 </div>
