@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
-import { Component, inject, Input, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -33,7 +32,6 @@ export class GenericRegisterComponent {
   constructor(
     private fb: FormBuilder,
     private modalRef: NzModalRef,
-    private http: HttpClient,
     private drinkService: DrinkService,
     private ingredientService: IngredientService,
     private burgerService: BurgerService,

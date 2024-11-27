@@ -33,8 +33,14 @@ export class OrderComponent {
   }
   
   openRegisterModal(modalType: string): void {
+    const title: { [key: string]: string} = {
+      drink: 'Bebida',
+      ingredient: 'Ingrediente',
+      burger: 'Hambúrguer',
+    }
+
     this.modal.create({
-      nzTitle: 'Cadastrar ' + (modalType == 'drink' ? 'Bebida' : modalType == 'ingredient' ? 'Ingrediente' : 'Hambúrguer'),
+      nzTitle: 'Cadastrar ' + title[modalType],
       nzContent: GenericRegisterComponent,
       nzFooter: null,
       nzData: {

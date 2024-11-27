@@ -82,6 +82,7 @@ export class OrderRegisterComponent implements OnInit {
     });
   }
 
+  // Calcula o preço total do pedido
   getTotalPrice(): number {
     const burgersTotal = this.orderForm.get('orderBurgers')?.value.reduce(
       (sum: number, item: any) => sum + this.getItemPrice('burger', item.burgerId) * item.quantity,
@@ -174,9 +175,9 @@ export class OrderRegisterComponent implements OnInit {
 
   saveOrder(): void {
     if (this.orderForm.valid) {
-      debugger
       this.submitting = true;
-      const orderData = this.orderForm.value;
+      const orderData = { ...this.orderForm.value, value: this.getTotalPrice()};
+
       this.orderService.create(orderData).subscribe({
         next: (response: any) => {
           this.message.success('Pedido salvo com sucesso!!');

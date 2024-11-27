@@ -8,10 +8,11 @@
 <nz-table #basicTable [nzData]="orders" [nzBordered]="true" [nzShowPagination]="false">
   <thead>
     <tr>
-      <th nzWidth="15%" class="table-header">Código</th>
+      <th nzWidth="10%" class="table-header">Código</th>
       <th nzWidth="35%" class="table-header">Nome</th>
       <th nzWidth="30%" class="table-header">Descrição</th>
-      <th nzWidth="20%" class="table-header">Data do Pedido</th>
+      <th nzWidth="10%" class="table-header">Valor</th>
+      <th nzWidth="25%" class="table-header">Data do Pedido</th>
     </tr>
   </thead>
   <tbody>
@@ -19,6 +20,7 @@
       <td>{{ order.code }}</td>
       <td>{{ order.name }}</td>
       <td>{{ order.description }}</td>
+      <td>{{ order.value | currency:'BRL' }}</td>
       <td>{{ order.orderDate | date: 'dd/MM/yyyy' }}</td>
     </tr>
   </tbody>
