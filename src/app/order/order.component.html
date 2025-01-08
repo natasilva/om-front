@@ -8,7 +8,17 @@
   </div>
 </div>
 
-<nz-table #basicTable [nzData]="orders" [nzBordered]="true" [nzShowPagination]="false">
+<div class="filters">
+  <nz-input-group class="search-input" [nzSuffix]="suffixIconSearch">
+    <input type="text" [(ngModel)]="name" (ngModelChange)="onChangeSearch($event)" nz-input placeholder="Pesquisar por nome de cliente" />
+  </nz-input-group>
+  <ng-template #suffixIconSearch>
+    <span nz-icon nzType="search"></span>
+  </ng-template>
+  <nz-range-picker nzSize="large" [(ngModel)]="dates" (ngModelChange)="onChangeDate($event)"></nz-range-picker>
+</div>
+
+<nz-table #basicTable [nzData]="orders.rows" [nzBordered]="true" [nzFrontPagination]="false" [nzTotal]="orders.count" [nzPageSize]="pageSize" [nzPageIndex]="pageIndex" (nzQueryParams)="onQueryParamsChange($event)">
   <thead>
     <tr>
       <th nzWidth="10%" class="table-header">Código</th>
@@ -19,12 +29,12 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let order of orders">
+    <tr *ngFor="let order of orders.rows">
       <td>{{ order.code }}</td>
       <td>{{ order.name }}</td>
       <td>{{ order.description }}</td>
       <td>{{ order.value | currency:'BRL' }}</td>
-      <td>{{ order.orderDate | date: 'dd/MM/yyyy' }}</td>
+      <td>{{ order.order_date | date: 'dd/MM/yyyy' }}</td>
     </tr>
   </tbody>
 </nz-table>

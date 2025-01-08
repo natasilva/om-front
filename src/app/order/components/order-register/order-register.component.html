@@ -79,15 +79,15 @@
   <!-- Order Date -->
   <div nz-form-item>
     <div nz-form-label>
-      <label for="orderDate">Data do Pedido</label>
+      <label for="order_date">Data do Pedido</label>
     </div>
     <div nz-form-control>
       <nz-date-picker
-        formControlName="orderDate"
+        formControlName="order_date"
         nzFormat="dd/MM/yyyy"
-        [class.is-invalid]="orderForm.get('orderDate')?.invalid && orderForm.get('orderDate')?.touched"
+        [class.is-invalid]="orderForm.get('order_date')?.invalid && orderForm.get('order_date')?.touched"
       ></nz-date-picker>
-      <div *ngIf="orderForm.get('orderDate')?.invalid && orderForm.get('orderDate')?.touched" class="error-message">
+      <div *ngIf="orderForm.get('order_date')?.invalid && orderForm.get('order_date')?.touched" class="error-message">
         Campo obrigatório.
       </div>
     </div>

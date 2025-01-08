@@ -42,9 +42,9 @@ export class GenericRegisterComponent {
     this.registerForm = this.fb.group({
       code: [null, [Validators.required, Validators.maxLength(5)]],
       description: [null, [Validators.required, Validators.maxLength(100)]],
-      unit_price: [null, [Validators.required, Validators.min(0)]],
-      ...(this.type === 'ingredient' && { is_additional: [false] }),
-      ...(this.type === 'drink' && { has_sugar: [false] }),
+      unitPrice: [null, [Validators.required, Validators.min(0)]],
+      ...(this.type === 'ingredient' && { isAdditional: [false] }),
+      ...(this.type === 'drink' && { hasSugar: [false] }),
       ...(this.type === 'burger' && { burgerIngredients: this.fb.array([], [Validators.required, this.minimumArrayLength(1)])}),
     });
 
@@ -91,7 +91,7 @@ export class GenericRegisterComponent {
       return;
     }
   
-    const data = this.registerForm.value;
+    const data = { ...this.registerForm.value };
     this.submitting = true;
   
     const serviceMap: { [key: string]: any } = {

@@ -47,7 +47,7 @@ export class OrderRegisterComponent implements OnInit {
       description: ['', [Validators.required]],
       name: ['', [Validators.required]],
       phone: ['', [Validators.required, Validators.pattern(/^[0-9]{10,11}$/)]],
-      orderDate: [null, [Validators.required]],
+      order_date: [null, [Validators.required]],
       address: this.fb.group({
         street: ['', [Validators.required]],
         number: ['', [Validators.required]],
@@ -200,20 +200,26 @@ export class OrderRegisterComponent implements OnInit {
   }
 
 
-  closeModal(): void {
-    this.modalRef.close();
+  closeModal(reload: boolean = false): void {
+    this.modalRef.close(reload);
   }
 
   saveOrder(): void {
     if (this.orderForm.valid) {
       this.submitting = true;
-      const orderData = { ...this.orderForm.value, value: this.getTotalPrice()};
+
+      const orderData = { ...this.orderForm.value, ...this.orderForm.value.address, value: this.getTotalPrice()};
+      delete orderData.address;
+
+      orderData.orderDrinks = orderData.orderDrinks.map((val: any) => { return { drink: { id: val.drinkId }, quantity: val.quantity }})
+      orderData.orderBurgers = orderData.orderBurgers.map((val: any) => { return { burger: { id: val.burgerId }, quantity: val.quantity }})
+      orderData.orderAdditionals = orderData.orderAdditionals.map((val: any) => { return { ingredient: { id: val.ingredientId }, quantity: val.quantity }})
 
       this.orderService.create(orderData).subscribe({
         next: (response: any) => {
           this.message.success('Pedido salvo com sucesso!!');
           this.submitting = false;
-          this.closeModal()
+          this.closeModal(true)
         },
         error: (error: any) => {
           this.submitting = false;

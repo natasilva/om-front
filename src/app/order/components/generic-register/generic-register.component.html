@@ -28,11 +28,11 @@
     <!-- Valor -->
     <div nz-form-item>
       <div nz-form-label>
-        <label for="unit_price">Valor (R$)</label>
+        <label for="unitPrice">Valor (R$)</label>
       </div>
       <div nz-form-control>
-        <input nz-input id="unit_price" placeholder="Valor do item (R$)" formControlName="unit_price" type="number" />
-        <div *ngIf="registerForm.get('unit_price')?.invalid && registerForm.get('unit_price')?.touched" class="error-message">
+        <input nz-input id="unitPrice" placeholder="Valor do item (R$)" formControlName="unitPrice" type="number" />
+        <div *ngIf="registerForm.get('unitPrice')?.invalid && registerForm.get('unitPrice')?.touched" class="error-message">
           Campo obrigatório.
         </div>
       </div>
@@ -41,19 +41,19 @@
     <!-- É adicional? -->
     <div *ngIf="type === 'ingredient'" nz-form-item>
       <div nz-form-label>
-        <label for="is_additional">É adicional?</label>
+        <label for="isAdditional">É adicional?</label>
       </div>
       <div nz-form-control>
-        <label nz-checkbox formControlName="is_additional">Sim</label>
+        <label nz-checkbox formControlName="isAdditional">Sim</label>
       </div>
     </div>
   
     <div *ngIf="type === 'drink'" nz-form-item>
       <div nz-form-label>
-        <label for="has_sugar">Contém açúcar?</label>
+        <label for="hasSugar">Contém açúcar?</label>
       </div>
       <div nz-form-control>
-        <label nz-checkbox formControlName="has_sugar">Sim</label>
+        <label nz-checkbox formControlName="hasSugar">Sim</label>
       </div>
     </div>
 

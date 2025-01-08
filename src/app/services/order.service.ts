@@ -10,8 +10,8 @@ export class OrderService {
   private url = environment.api
   constructor(private http: HttpClient) { }
 
-  list(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.url}/orders`);
+  list(params: any = {}): Observable<{ count: number, rows: any[] }> {
+    return this.http.get<{ count: number, rows: any[] }>(`${this.url}/orders`, { params });
   }
 
   create(data: any): Observable<any> {
